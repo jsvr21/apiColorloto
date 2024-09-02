@@ -35,7 +35,7 @@ function extraerDatos($html) {
     $datos = [
         'balotas' => [],
         'numeroSorteo' => extraerNumeroSorteo($xpath),
-        'fechaSorteo' => extraerFechaSorteo($xpath),
+        'fechaSorteoActual' => extraerFechaSorteo($xpath),
         'fechaProximoSorteo' => extraerFechaProximoSorteo($xpath),
     ];
 
