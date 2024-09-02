@@ -8,4 +8,5 @@ COPY public/ /var/www/html/
 EXPOSE 80
 
 # Configura el comando para iniciar el servidor PHP
-CMD ["php", "-S", "0.0.0.0:80", "-t", "/var/www/html/"]
+CMD ["php", "-S", "0.0.0.0:80", "index.php"]
+
