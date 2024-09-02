@@ -30,11 +30,13 @@ function extraerDatos($html) {
     // Selecciono el contenedor principal de las balotas
     $contenedorBalotas = $xpath->query('//div[@id="balotasContainer"]');
 
+
     // Estructura para almacenar los datos extraídos
     $datos = [
         'balotas' => [],
         'numeroSorteo' => extraerNumeroSorteo($xpath),
         'fechaSorteo' => extraerFechaSorteo($xpath),
+        'fechaProximoSorteo' => extraerFechaProximoSorteo($xpath),
     ];
 
     // Si encuentro el contenedor, extraigo las balotas
@@ -71,6 +73,34 @@ function extraerFechaSorteo($xpath) {
     }
     return 'Desconocida';
 }
+
+function extraerFechaProximoSorteo($xpath){
+    $proximoSorteo = $xpath->query('//div[contains(@class, "fs-2") and contains(@class, "white-color") and contains(@class, "nunito-black") and contains(@class, "mt-4")]/text()');
+    if ($proximoSorteo->length > 0) {
+        $texto = trim($proximoSorteo->item(0)->nodeValue);
+
+        $dias = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
+
+        $subcadena = "";
+
+        foreach ($dias as $dia) {
+            $posicion = strpos($texto, $dia);
+            if ($posicion !== false) {
+                // Si encuentro uno de los días, extraigo la subcadena y salgo del bucle
+                $subcadena = substr($texto, $posicion);
+                break;
+            }
+        }
+        
+        if ($subcadena) {
+            return $subcadena;  // Imprime la subcadena comenzando desde el día encontrado
+        } else {
+            echo "No se encontró ningún día de la semana en el texto.";
+        }
+    }
+}
+
+
 
 // Obtengo el contenido de la página
 $html = obtenerContenido($url);
