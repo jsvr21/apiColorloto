@@ -1,12 +1,15 @@
 # Usa una imagen base de PHP
 FROM php:8.0-cli
 
-# Copia el código fuente al contenedor
-COPY public/ /var/www/html/
+# Copia los archivos del proyecto al contenedor
+COPY . /app
 
-# Expone el puerto en el que el servidor PHP escuchará
+# Establece el directorio de trabajo
+WORKDIR /app
+
+# Expone el puerto en el que el servidor escuchará
 EXPOSE 80
 
-# Configura el comando para iniciar el servidor PHP
-CMD ["php", "-S", "0.0.0.0:80", "index.php"]
+# Comando para iniciar el servidor PHP integrado
+CMD ["php", "-S", "0.0.0.0:80"]
 
